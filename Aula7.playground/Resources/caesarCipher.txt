@@ -1,0 +1,22 @@
+import Foundation
+
+let text = "pedro"
+let offset: UInt8 = 13
+var newText = ""
+let asciiAlphabetRange: ClosedRange<UInt8> = 97...122 // a..z em ASCII
+let delta = asciiAlphabetRange.upperBound - asciiAlphabetRange.lowerBound + 1
+
+let startChar = CFAbsoluteTimeGetCurrent()
+for letter in text {
+    if let code = letter.asciiValue {
+        var codeOffset = code + offset
+        if !asciiAlphabetRange.contains(codeOffset) {
+            codeOffset -= delta
+        }
+        newText.append(String(format: "%c", codeOffset))
+    } else {
+        newText.append(letter)
+    }
+}
+let endChar = CFAbsoluteTimeGetCurrent()
+print("Origianl: \(text)\nCifra: \(newText)\nTempo de execução: ", endChar - startChar)
